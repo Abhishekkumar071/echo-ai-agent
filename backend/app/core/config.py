@@ -28,11 +28,20 @@ class Settings(BaseSettings):
     # ── Sessions ──────────────────────────────────────────────────────────
     session_expire_days: int = 30
 
-    # ── Gemini ────────────────────────────────────────────────────────────
-    gemini_api_key: str = ""
-    gemini_generation_model: str = "gemini-3.8-flash"
-    gemini_intent_model: str = "gemini-3.1-flash-lite"
-    gemini_embedding_model: str = "gemini-embedding-2"
+    # ── Groq ──────────────────────────────────────────────────────────────
+    # LLM inference via Groq's LPU hardware (fast, generous free tier)
+    groq_api_key: str = ""
+    groq_generation_model: str = "llama-3.3-70b-versatile"
+    groq_intent_model: str = "llama-3.1-8b-instant"  # cheap fast model for routing
+    groq_temperature: float = 0.7
+    groq_max_tokens: int = 2048
+    groq_timeout: int = 30  # seconds
+
+    # ── Embeddings ────────────────────────────────────────────────────────
+    # Local sentence-transformers — no API key, 768-dim, runs on CPU
+    # Model: all-mpnet-base-v2 (best quality at 768-dim, ~420MB download once)
+    embedding_model: str = "all-mpnet-base-v2"
+    embedding_dim: int = 768  # matches pgvector column — no migration needed
 
     # ── Tavily ────────────────────────────────────────────────────────────
     tavily_api_key: str = ""
